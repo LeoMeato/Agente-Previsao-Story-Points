@@ -1,0 +1,11 @@
+issue_id,issue_key,project_key,issue_type,priority,actual_story_points,predicted_story_points,absolute_error,mode,confidence,complexity,has_empty_description,comment_count,has_zero_comments,title_changed_after_estimation,desc_changed_after_estimation,sp_changed_after_estimation,execution_time_seconds,rationale
+18645,MESOS-6020,MESOS,Task,Major,3.0,3.0,0.0,zero-shot,0.7,Medium,False,3,False,False,False,False,0.0,[Mock Mode] Estimativa baseada no tipo 'Task' e descrição de 389 caracteres.
+19186,MESOS-5470,MESOS,Bug,Minor,1.0,3.0,2.0,zero-shot,0.7,Medium,False,0,True,False,False,False,0.0,[Mock Mode] Estimativa baseada no tipo 'Bug' e descrição de 353 caracteres.
+22576,MESOS-2070,MESOS,Improvement,Major,2.0,3.0,1.0,zero-shot,0.7,Medium,False,4,False,False,False,True,0.0,[Mock Mode] Estimativa baseada no tipo 'Improvement' e descrição de 225 caracteres.
+21422,MESOS-3227,MESOS,Improvement,Major,3.0,3.0,0.0,zero-shot,0.7,Medium,True,1,False,False,False,False,0.0,[Mock Mode] Estimativa baseada no tipo 'Improvement' e descrição de 0 caracteres.
+16878,MESOS-7791,MESOS,Bug,Major,5.0,3.0,2.0,zero-shot,0.7,Medium,False,3,False,False,False,False,0.0,[Mock Mode] Estimativa baseada no tipo 'Bug' e descrição de 416 caracteres.
+18573,MESOS-6092,MESOS,Bug,Minor,2.0,3.0,1.0,zero-shot,0.7,Medium,False,2,False,False,False,True,0.0,[Mock Mode] Estimativa baseada no tipo 'Bug' e descrição de 530 caracteres.
+15724,MESOS-8947,MESOS,Improvement,Major,2.0,3.0,1.0,zero-shot,0.7,Medium,False,1,False,False,False,False,0.0,[Mock Mode] Estimativa baseada no tipo 'Improvement' e descrição de 84 caracteres.
+17419,MESOS-7250,MESOS,Improvement,Major,5.0,3.0,2.0,zero-shot,0.7,Medium,False,1,False,False,False,False,0.0,[Mock Mode] Estimativa baseada no tipo 'Improvement' e descrição de 191 caracteres.
+21350,MESOS-3299,MESOS,Task,Major,1.0,3.0,2.0,zero-shot,0.7,Medium,False,2,False,False,False,True,0.0,[Mock Mode] Estimativa baseada no tipo 'Task' e descrição de 325 caracteres.
+16806,MESOS-7863,MESOS,Bug,Critical,5.0,3.0,2.0,zero-shot,0.7,Medium,False,3,False,False,False,False,0.0,[Mock Mode] Estimativa baseada no tipo 'Bug' e descrição de 674 caracteres.

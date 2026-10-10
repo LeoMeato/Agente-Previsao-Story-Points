@@ -1,0 +1,57 @@
+# Base de dados volumosa (Dump original MySQL de 4.3 GB)
+TAWOS.sql
+*.sql
+
+# Base local SQLite gerada (326 MB - excede o limite de 100 MB do GitHub)
+tawos.db
+*.db
+*.sqlite
+*.sqlite3
+
+# Arquivos de ambiente e segredos (chaves de API)
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ambientes virtuais
+venv/
+.venv/
+env/
+ENV/
+
+# Testes e cobertura
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs e arquivos temporários do sistema
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
