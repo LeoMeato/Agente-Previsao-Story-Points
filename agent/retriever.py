@@ -1,4 +1,3 @@
-
 import sqlite3
 from typing import List, Dict, Any, Optional
 from .config import DATABASE_PATH
@@ -22,7 +21,7 @@ class HistoricalRetriever:
         conn.row_factory = sqlite3.Row
         return conn
 
-    def get_issue_by_key(self, issue_key: str) -> Optional[Dict[str, Any]]:
+    def get_issue_by_key(self, issue_key: str, include_comments: bool = False) -> Optional[Dict[str, Any]]:
         """Recupera uma issue pelo seu issue_key (ex: MESOS-10175)."""
         with self.get_connection() as conn:
             cur = conn.cursor()
@@ -35,9 +34,12 @@ class HistoricalRetriever:
             row = cur.fetchone()
             if not row:
                 return None
-            return self._format_issue_row(dict(row))
+            issue = self._format_issue_row(dict(row))
+            if include_comments:
+                issue["comments"] = self.get_comments_for_issue(issue["id"], conn=conn)
+            return issue
 
-    def get_issue_by_id(self, issue_id: int) -> Optional[Dict[str, Any]]:
+    def get_issue_by_id(self, issue_id: int, include_comments: bool = False) -> Optional[Dict[str, Any]]:
         """Recupera uma issue pelo seu ID numérico."""
         with self.get_connection() as conn:
             cur = conn.cursor()
@@ -50,7 +52,47 @@ class HistoricalRetriever:
             row = cur.fetchone()
             if not row:
                 return None
-            return self._format_issue_row(dict(row))
+            issue = self._format_issue_row(dict(row))
+            if include_comments:
+                issue["comments"] = self.get_comments_for_issue(issue["id"], conn=conn)
+            return issue
+
+    def get_comments_for_issue(
+        self,
+        issue_id: int,
+        limit: Optional[int] = None,
+        conn: Optional[sqlite3.Connection] = None
+    ) -> List[str]:
+        """Recupera os comentários textuais de uma issue ordenados cronologicamente."""
+        should_close = False
+        if conn is None:
+            conn = self.get_connection()
+            should_close = True
+
+        try:
+            cur = conn.cursor()
+            query = """
+                SELECT comment, comment_text
+                FROM comment
+                WHERE issue_id = ?
+                ORDER BY creation_date ASC, id ASC
+            """
+            if limit is not None:
+                query += " LIMIT ?"
+                cur.execute(query, (issue_id, int(limit)))
+            else:
+                cur.execute(query, (issue_id,))
+            rows = cur.fetchall()
+            comments = []
+            for r in rows:
+                raw_text = r["comment"] if r["comment"] is not None else r["comment_text"]
+                cleaned = clean_text(raw_text)
+                if cleaned:
+                    comments.append(cleaned)
+            return comments
+        finally:
+            if should_close:
+                conn.close()
 
     def get_project_stats(self, project_id: int) -> Dict[str, Any]:
         """Calcula estatísticas de story points do projeto para contexto de calibração."""
@@ -71,7 +113,9 @@ class HistoricalRetriever:
     def retrieve_few_shot_anchors(
         self,
         target_issue: Dict[str, Any],
-        k: int = 4
+        k: int = 4,
+        include_comments: bool = True,
+        max_comments: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """
         Recupera k exemplos históricos do mesmo projeto para calibrar a escala de Story Points.
@@ -175,6 +219,11 @@ class HistoricalRetriever:
                     if r["id"] not in seen_ids and len(anchors) < k:
                         seen_ids.add(r["id"])
                         anchors.append(self._format_issue_row(dict(r)))
+
+            if include_comments:
+                for anchor in anchors:
+                    if "id" in anchor:
+                        anchor["comments"] = self.get_comments_for_issue(anchor["id"], limit=max_comments, conn=conn)
 
             return anchors
 

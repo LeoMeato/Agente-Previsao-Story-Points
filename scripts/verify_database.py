@@ -4,7 +4,7 @@ import pandas as pd
 conn = sqlite3.connect("tawos.db")
 
 print("=== TABLE ROW COUNTS ===")
-for table in ["project", "sprint", "issue", "comment"]:
+for table in ["project", "issue", "comment"]:
     count = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
     print(f"{table:<10}: {count:>8} rows")
 

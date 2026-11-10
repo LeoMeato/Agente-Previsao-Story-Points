@@ -113,20 +113,6 @@ def main():
     """)
 
     cur.execute("""
-    CREATE TABLE sprint (
-        id INTEGER PRIMARY KEY,
-        jira_id INTEGER,
-        name TEXT,
-        state TEXT,
-        start_date TEXT,
-        end_date TEXT,
-        activated_date TEXT,
-        complete_date TEXT,
-        project_id INTEGER
-    );
-    """)
-
-    cur.execute("""
     CREATE TABLE issue (
         id INTEGER PRIMARY KEY,
         jira_id INTEGER,
@@ -176,13 +162,12 @@ def main():
 
     conn.commit()
 
-    print("Step 1: Reading Project, Sprint and Issues with Story Points...")
+    print("Step 1: Reading Project and Issues with Story Points...")
     start_time = time.time()
 
     valid_issue_ids = set()
     issues_to_insert = []
     projects_to_insert = []
-    sprints_to_insert = []
 
     with open(sql_file, "r", encoding="utf-8", errors="ignore") as f:
         for line_num, line in enumerate(f):
@@ -190,9 +175,6 @@ def main():
             if line.startswith("INSERT INTO `Project`"):
                 for r in parse_mysql_insert_line(line):
                     projects_to_insert.append(r[:9])
-            elif line.startswith("INSERT INTO `Sprint`"):
-                for r in parse_mysql_insert_line(line):
-                    sprints_to_insert.append(r[:9])
             elif line.startswith("INSERT INTO `Issue`"):
                 for r in parse_mysql_insert_line(line):
                     if len(r) >= 30:
@@ -220,9 +202,8 @@ def main():
         conn.commit()
         issues_to_insert = []
 
-    print(f"\nInserting {len(projects_to_insert)} projects and {len(sprints_to_insert)} sprints...")
+    print(f"\nInserting {len(projects_to_insert)} projects...")
     cur.executemany("INSERT INTO project VALUES (?,?,?,?,?,?,?,?,?)", projects_to_insert)
-    cur.executemany("INSERT INTO sprint VALUES (?,?,?,?,?,?,?,?,?)", sprints_to_insert)
     conn.commit()
     print(f"Step 1 completed in {time.time() - start_time:.1f}s. Total issues with SP: {len(valid_issue_ids)}")
 

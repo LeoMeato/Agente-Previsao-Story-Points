@@ -32,9 +32,8 @@ O dump original `TAWOS.sql` (4.3 GB) foi filtrado e convertido em um banco local
 - **Arquivo:** `tawos.db` (~310 MB).
 - **Tabelas disponíveis:**
   1. `project` (39 projetos reais, ex.: Apache Mesos, Spring XD, MongoDB, MuleSoft).
-  2. `sprint` (4.594 sprints com datas de início e fim).
-  3. `issue` (**63.011 issues** que possuem `story_point > 0`, contendo título, descrição limpa `description_text`, tipo, prioridade, flags de mudança e a coluna pré-calculada `comment_count`).
-  4. `comment` (**197.927 comentários** vinculados exclusivamente às issues estimadas).
+  2. `issue` (**63.011 issues** que possuem `story_point > 0`, contendo título, descrição limpa `description_text`, tipo, prioridade, flags de mudança e a coluna pré-calculada `comment_count`).
+  3. `comment` (**197.927 comentários** vinculados exclusivamente às issues estimadas).
 
 ### Destaque dos Projetos para Testes
 - **Apache Mesos (`MESOS` - ID 4):** 3.268 issues estimadas (média 3.23 pts).
@@ -54,7 +53,7 @@ O dump original `TAWOS.sql` (4.3 GB) foi filtrado e convertido em um banco local
 - **Provedor e Modelo:** OpenAI (`gpt-4o-mini` / `gpt-4o`) com saídas estritas via Pydantic (`client.beta.chat.completions.parse` / `response_format=EstimationResult`).
 - **Estratégias Implementadas:**
   1. **Zero-Shot:** Análise contextual com base nas diretrizes ágeis (Fibonacci) e estatísticas globais do projeto.
-  2. **Few-Shot Dinâmico (Calibração Histórica):** Recupera no SQLite (`tawos.db`) âncoras históricas de esforço (baixo: 1-2 pts, médio: 3-5 pts, alto: 8+ pts) concluídas pela **mesma equipe** antes da data da issue avaliada (**zero vazamento temporal**).
+  2. **Few-Shot Dinâmico (Calibração Histórica):** Recupera no SQLite (`tawos.db`) âncoras históricas de esforço (baixo: 1-2 pts, médio: 3-5 pts, alto: 8+ pts) concluídas pela **mesma equipe** antes da data da issue avaliada (**zero vazamento temporal**), incluindo os comentários reais das issues de exemplo em vez da contagem numérica.
 - **Módulos Criados:**
   - [`agent/schemas.py`](agent/schemas.py): Definição de `EstimationResult` (story points, complexidade, confiança, rationale, fatores) e `EvaluationRecord`.
   - [`agent/retriever.py`](agent/retriever.py): Extrator de âncoras históricas e amostras estratificadas do SQLite.
