@@ -1,0 +1,179 @@
+{
+  "metadata": {
+    "timestamp": "2026-11-12T16:05:25.827659",
+    "target_types": [
+      "Bug",
+      "Suggestion",
+      "Improvement",
+      "Story"
+    ],
+    "count_per_type": 1,
+    "total_issues_analyzed": 4,
+    "mode": "few-shot",
+    "mock_mode": false,
+    "project_filter": "ALL",
+    "total_execution_time_seconds": 24.72,
+    "average_time_per_issue_seconds": 6.18
+  },
+  "global_summary": {
+    "total_samples": 4,
+    "mae": 1.5,
+    "median_ae": 1.0,
+    "std_ae": 1.5,
+    "exact_match_rate": 0.25,
+    "within_1_point_rate": 0.75,
+    "mean_confidence": 0.825
+  },
+  "metrics_by_type": {
+    "Bug": {
+      "total_samples": 1,
+      "mae": 0.0,
+      "median_ae": 0.0,
+      "std_ae": 0.0,
+      "exact_match_rate": 1.0,
+      "within_1_point_rate": 1.0,
+      "mean_confidence": 0.85
+    },
+    "Suggestion": {
+      "total_samples": 1,
+      "mae": 1.0,
+      "median_ae": 1.0,
+      "std_ae": 0.0,
+      "exact_match_rate": 0.0,
+      "within_1_point_rate": 1.0,
+      "mean_confidence": 0.8
+    },
+    "Improvement": {
+      "total_samples": 1,
+      "mae": 1.0,
+      "median_ae": 1.0,
+      "std_ae": 0.0,
+      "exact_match_rate": 0.0,
+      "within_1_point_rate": 1.0,
+      "mean_confidence": 0.85
+    },
+    "Story": {
+      "total_samples": 1,
+      "mae": 4.0,
+      "median_ae": 4.0,
+      "std_ae": 0.0,
+      "exact_match_rate": 0.0,
+      "within_1_point_rate": 0.0,
+      "mean_confidence": 0.8
+    }
+  },
+  "records": [
+    {
+      "issue_id": 396990,
+      "issue_key": "TISTUD-8760",
+      "project_key": "TISTUD",
+      "project_name": "Appcelerator Studio",
+      "issue_type": "Bug",
+      "priority": "High",
+      "title": "Android: Debugging for android device throws \"\"java.lang.NoClassDefFoundError: org/chromium/sdk/JavascriptVmFactory\"\"",
+      "actual_story_points": 5.0,
+      "predicted_story_points": 5.0,
+      "absolute_error": 0.0,
+      "confidence": 0.85,
+      "complexity": "Medium",
+      "mode": "few-shot",
+      "rationale": "A nova issue TISTUD-8760 apresenta um erro de execução relacionado ao ambiente de desenvolvimento, especificamente ao tentar depurar um aplicativo Android. A descrição fornece passos claros para reproduzir o problema, o que indica que a equipe pode ter uma compreensão razoável do que precisa ser feito para resolver a questão. Comparando com os exemplos históricos, a complexidade é semelhante ao exemplo TISTUD-8753, que também lidava com um erro de exceção em uma funcionalidade do Appcelerator Studio, estimado em 5 pontos. A questão atual envolve um erro que impede o aplicativo de ser depurado corretamente, o que pode exigir investigação e testes, mas não parece ter a mesma complexidade técnica que o exemplo TISTUD-8765, que foi estimado em 8 pontos devido a problemas de desempenho mais abrangentes e variáveis.",
+      "key_factors": [
+        "Erro de execução específico ao depurar para Android",
+        "Passos claros para reprodução do problema",
+        "Impacto na funcionalidade de depuração"
+      ],
+      "comparison_with_history": "A nova issue é comparável ao exemplo TISTUD-8753, que lidava com um erro de exceção, ambos com impacto significativo na funcionalidade, mas a nova issue não apresenta a mesma complexidade de investigação que o TISTUD-8765.",
+      "comment_count": 5,
+      "has_empty_description": false,
+      "has_zero_comments": false,
+      "execution_time_seconds": 6.11,
+      "batch_index": 1,
+      "timestamp": "2026-11-12T16:05:07.223249"
+    },
+    {
+      "issue_id": 58243,
+      "issue_key": "JSWCLOUD-13228",
+      "project_key": "JSWCLOUD",
+      "project_name": "Atlassian Software Cloud",
+      "issue_type": "Suggestion",
+      "priority": "None",
+      "title": "Update documentation to reflect public/anonymous access to board associated data has been removed.",
+      "actual_story_points": 2.0,
+      "predicted_story_points": 3.0,
+      "absolute_error": 1.0,
+      "confidence": 0.8,
+      "complexity": "Medium",
+      "mode": "few-shot",
+      "rationale": "A nova issue (JSWCLOUD-13228) envolve a atualização da documentação para refletir uma mudança no acesso aos dados do quadro associado, o que é uma tarefa padrão e bem compreendida. A descrição fornece um problema claro e uma solução sugerida, o que facilita a implementação. Comparando com os exemplos históricos, a complexidade é semelhante à do JSWCLOUD-9559, que também envolvia uma atualização de documentação com um impacto moderado. Portanto, a estimativa de 3 story points é apropriada.",
+      "key_factors": [
+        "Atualização de documentação",
+        "Mudança de acesso a dados",
+        "Impacto moderado na compreensão do usuário"
+      ],
+      "comparison_with_history": "A nova issue se assemelha ao exemplo JSWCLOUD-9559, que foi estimado em 3.0 pts, pois ambas envolvem atualizações de documentação e têm um escopo bem definido.",
+      "comment_count": 1,
+      "has_empty_description": false,
+      "has_zero_comments": false,
+      "execution_time_seconds": 6.83,
+      "batch_index": 2,
+      "timestamp": "2026-11-12T16:05:14.051647"
+    },
+    {
+      "issue_id": 318948,
+      "issue_key": "MDL-68112",
+      "project_key": "MDL",
+      "project_name": "Moodle",
+      "issue_type": "Improvement",
+      "priority": "Minor",
+      "title": "The search icon container in the activity chooser search bar should use bootstrap classes",
+      "actual_story_points": 1.0,
+      "predicted_story_points": 2.0,
+      "absolute_error": 1.0,
+      "confidence": 0.85,
+      "complexity": "Low",
+      "mode": "few-shot",
+      "rationale": "A tarefa envolve a substituição de um componente existente por uma classe bootstrap, o que é uma alteração simples e bem compreendida. Não há complexidade técnica significativa, pois a mudança é pontual e não afeta outras partes do sistema. Comparando com os exemplos históricos, a tarefa se assemelha mais ao Exemplo Histórico 1 (MDL-68019), que foi estimado em 1 ponto, mas considerando que a implementação de classes bootstrap pode requerer um pequeno ajuste no layout, optei por 2 pontos.",
+      "key_factors": [
+        "Alteração pontual na interface do usuário",
+        "Uso de classes bootstrap já existentes",
+        "Baixo risco de impacto em outras funcionalidades"
+      ],
+      "comparison_with_history": "A nova issue é mais simples e direta em comparação com as tarefas anteriores, especialmente em relação ao Exemplo Histórico 1, que lidou com uma melhoria na API, enquanto esta é uma melhoria de UI com menor complexidade.",
+      "comment_count": 29,
+      "has_empty_description": false,
+      "has_zero_comments": false,
+      "execution_time_seconds": 9.59,
+      "batch_index": 3,
+      "timestamp": "2026-11-12T16:05:23.643516"
+    },
+    {
+      "issue_id": 234126,
+      "issue_key": "DM-14012",
+      "project_key": "DM",
+      "project_name": "Lsstcorp Data management",
+      "issue_type": "Story",
+      "priority": "None",
+      "title": "Add helper container class supporting topologically sorted iteration over elements",
+      "actual_story_points": 1.0,
+      "predicted_story_points": 5.0,
+      "absolute_error": 4.0,
+      "confidence": 0.8,
+      "complexity": "Medium",
+      "mode": "few-shot",
+      "rationale": "A nova issue DM-14012 envolve a adição de uma nova classe de ajuda que suporta iteração topologicamente ordenada, o que implica em uma lógica não trivial para gerenciar a inserção de elementos e suas conexões. Comparando com os exemplos históricos, a complexidade é semelhante à de DM-14003 (12 pontos), que também envolvia a criação de uma nova funcionalidade, mas a nova classe parece menos complexa do que a integração do ShimButler. A tarefa não é trivial, pois requer uma compreensão clara de estruturas de dados e algoritmos de ordenação, mas não envolve mudanças arquiteturais profundas ou um alto grau de incerteza, o que a coloca na faixa de 5 pontos.",
+      "key_factors": [
+        "Implementação de lógica de inserção e iteração",
+        "Necessidade de garantir a ordenação topológica",
+        "Complexidade moderada em comparação com a criação de novas funcionalidades"
+      ],
+      "comparison_with_history": "A nova issue é mais complexa do que a DM-13999 (1 ponto) e DM-13988 (3 pontos), mas menos complexa do que DM-14003 (12 pontos). A estimativa de 5 pontos reflete essa comparação.",
+      "comment_count": 0,
+      "has_empty_description": false,
+      "has_zero_comments": true,
+      "execution_time_seconds": 2.18,
+      "batch_index": 4,
+      "timestamp": "2026-11-12T16:05:25.826491"
+    }
+  ]
+}

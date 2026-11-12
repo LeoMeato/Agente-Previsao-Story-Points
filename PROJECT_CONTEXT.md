@@ -42,10 +42,11 @@ O dump original `TAWOS.sql` (4.3 GB) foi filtrado e convertido em um banco local
 
 ---
 
-## 4. Scripts Utilitários Criados (`scripts/`)
+## 4. Scripts Utilitários Criados (`scripts/` e raiz)
 - [`build_tawos_sqlite.py`](scripts/build_tawos_sqlite.py): Parser de streaming que extraiu o dump de 4.3 GB para o SQLite em ~4 minutos.
 - [`verify_database.py`](scripts/verify_database.py): Consulta de integridade, contagem de linhas e verificação das variáveis das RQs.
 - [`count_story_points.py`](scripts/count_story_points.py): Relatório de issues e story points por projeto.
+- [`predict_batch.py`](predict_batch.py) (e [`scripts/predict_batch.py`](scripts/predict_batch.py)): Script de predição em lote com amostragem balanceada para os tipos `Bug`, `Suggestion`, `Improvement` e `Story`, salvando métricas consolidadas e predições em arquivos CSV e JSON.
 
 ---
 

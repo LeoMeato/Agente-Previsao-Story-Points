@@ -254,6 +254,77 @@ class HistoricalRetriever:
             rows = cur.fetchall()
             return [self._format_issue_row(dict(r)) for r in rows]
 
+    def sample_issues_by_types(
+        self,
+        issue_types: Optional[List[str]] = None,
+        count_per_type: int = 5,
+        project_key: Optional[str] = None,
+        min_date: Optional[str] = "2014-01-01",
+        random_seed: int = 42
+    ) -> List[Dict[str, Any]]:
+        """
+        Retorna uma amostra de issues balanceada por tipo (ex: Bug, Suggestion, Improvement, Story),
+        garantindo exatamente 'count_per_type' issues para cada tipo solicitado.
+        """
+        if issue_types is None:
+            issue_types = ["Bug", "Suggestion", "Improvement", "Story"]
+
+        selected_issues: List[Dict[str, Any]] = []
+
+        with self.get_connection() as conn:
+            cur = conn.cursor()
+            for itype in issue_types:
+                conditions = ["i.type = ?", "i.story_point > 0"]
+                params: List[Any] = [itype]
+
+                if project_key and project_key.upper() != "ALL":
+                    conditions.append("p.project_key = ?")
+                    params.append(project_key)
+
+                if min_date:
+                    conditions.append("i.creation_date >= ?")
+                    params.append(min_date)
+
+                where_clause = " AND ".join(conditions)
+                order_expr = f"((i.id * 1103515245 + {random_seed}) & 2147483647)"
+
+                query = f"""
+                    SELECT i.*, p.project_key, p.name as project_name
+                    FROM issue i
+                    JOIN project p ON i.project_id = p.id
+                    WHERE {where_clause}
+                    ORDER BY {order_expr}
+                    LIMIT ?
+                """
+                params.append(count_per_type)
+                cur.execute(query, tuple(params))
+                rows = cur.fetchall()
+
+                # Fallback se não encontrar o suficiente com min_date
+                if len(rows) < count_per_type and min_date:
+                    fallback_conds = ["i.type = ?", "i.story_point > 0"]
+                    fallback_params: List[Any] = [itype]
+                    if project_key and project_key.upper() != "ALL":
+                        fallback_conds.append("p.project_key = ?")
+                        fallback_params.append(project_key)
+                    fallback_where = " AND ".join(fallback_conds)
+                    fallback_query = f"""
+                        SELECT i.*, p.project_key, p.name as project_name
+                        FROM issue i
+                        JOIN project p ON i.project_id = p.id
+                        WHERE {fallback_where}
+                        ORDER BY {order_expr}
+                        LIMIT ?
+                    """
+                    fallback_params.append(count_per_type)
+                    cur.execute(fallback_query, tuple(fallback_params))
+                    rows = cur.fetchall()
+
+                for r in rows:
+                    selected_issues.append(self._format_issue_row(dict(r)))
+
+        return selected_issues
+
     def _format_issue_row(self, row: Dict[str, Any]) -> Dict[str, Any]:
         """Limpa textos e formata campos para o agente."""
         row["title"] = clean_text(row.get("title", ""))

@@ -1,6 +1,8 @@
 import argparse
 import sys
 import json
+import time
+from typing import Optional, Dict, Any
 
 # Assegura suporte a UTF-8 no console Windows se suportado
 if hasattr(sys.stdout, "reconfigure"):
@@ -18,7 +20,71 @@ def print_banner():
     print(f"  Modelo: {OPENAI_MODEL} | Provedor: OpenAI")
     print("=" * 70)
 
+def predict_issue_with_agent(
+    issue_or_key,
+    agent: Optional[StoryPointAgent] = None,
+    retriever: Optional[HistoricalRetriever] = None,
+    mode: str = "few-shot",
+    mock: bool = False
+) -> Dict[str, Any]:
+    """
+    Função utilitária reutilizável para predição de uma única issue via agente,
+    retornando um dicionário completo com dados da issue, estimativa e erro.
+    """
+    if retriever is None:
+        retriever = HistoricalRetriever()
+    if agent is None:
+        agent = StoryPointAgent(mock_mode=mock)
+
+    if isinstance(issue_or_key, str):
+        issue = retriever.get_issue_by_key(issue_or_key)
+        if not issue:
+            raise ValueError(f"Issue '{issue_or_key}' não encontrada no banco tawos.db.")
+    else:
+        issue = issue_or_key
+
+    start_time = time.time()
+    result = agent.estimate(issue, mode=mode)
+    exec_time = time.time() - start_time
+
+    actual_sp = float(issue.get("story_point", 0.0))
+    pred_sp = float(result.estimated_story_points)
+    abs_err = abs(pred_sp - actual_sp)
+
+    return {
+        "issue_id": int(issue["id"]),
+        "issue_key": str(issue.get("issue_key", "")),
+        "project_key": str(issue.get("project_key", "")),
+        "project_name": str(issue.get("project_name", "")),
+        "issue_type": str(issue.get("type", "Task")),
+        "priority": str(issue.get("priority", "Major")),
+        "title": str(issue.get("title", "")),
+        "actual_story_points": actual_sp,
+        "predicted_story_points": pred_sp,
+        "absolute_error": round(abs_err, 2),
+        "confidence": float(result.confidence),
+        "complexity": str(result.complexity),
+        "mode": mode,
+        "rationale": str(result.rationale),
+        "key_factors": result.key_factors or [],
+        "comparison_with_history": result.comparison_with_history or "",
+        "comment_count": int(issue.get("comment_count", 0)),
+        "has_empty_description": (len(str(issue.get("description_text", "")).strip()) == 0),
+        "has_zero_comments": (int(issue.get("comment_count", 0)) == 0),
+        "execution_time_seconds": round(exec_time, 2)
+    }
+
 def handle_single_issue(args, agent, retriever):
+    if getattr(args, "json", False):
+        issue = retriever.get_issue_by_key(args.issue)
+        if not issue:
+            print(json.dumps({"error": f"Issue '{args.issue}' não encontrada no banco tawos.db."}, ensure_ascii=False))
+            sys.exit(1)
+        modes = ["zero-shot", "few-shot"] if args.mode == "both" else [args.mode]
+        res_list = [predict_issue_with_agent(issue, agent=agent, retriever=retriever, mode=m) for m in modes]
+        print(json.dumps(res_list[0] if len(res_list) == 1 else res_list, ensure_ascii=False, indent=2))
+        return
+
     print(f"\n[+] Buscando issue: {args.issue}...")
     issue = retriever.get_issue_by_key(args.issue)
     if not issue:
@@ -107,10 +173,12 @@ def main():
     parser.add_argument("--project", type=str, default="MESOS", help="Código do projeto (ex: MESOS, XD, EVG)")
     parser.add_argument("--sample-size", type=int, default=10, help="Tamanho da amostra para benchmark")
     parser.add_argument("--mock", action="store_true", help="Executa em modo Mock (sem chamadas à API OpenAI)")
+    parser.add_argument("--json", action="store_true", help="Imprime a saída em formato JSON estruturado")
 
     args = parser.parse_args()
 
-    print_banner()
+    if not args.json:
+        print_banner()
 
     # Validação de API Key
     if not args.mock and not OPENAI_API_KEY:

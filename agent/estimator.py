@@ -51,6 +51,17 @@ class StoryPointAgent:
         else:
             user_prompt = build_zero_shot_prompt(target_issue, project_stats)
 
+        print("\n" + "="*80)
+        print(f"=== REQUISIÇÃO ENVIADA À OPENAI ({mode.upper()}) ===")
+        print(f"Issue Key: {target_issue.get('issue_key')}")
+        print("-" * 80)
+        print("[SYSTEM PROMPT]:")
+        print(SYSTEM_PROMPT)
+        print("-" * 80)
+        print("[USER PROMPT]:")
+        print(user_prompt)
+        print("="*80 + "\n")
+
         # Chamada à OpenAI com Structured Outputs garantindo tipagem forte
         completion = self.client.beta.chat.completions.parse(
             model=self.model,
@@ -80,7 +91,7 @@ class StoryPointAgent:
         elif issue_type == "Epic":
             sp = 8.0 if desc_len < 300 else 13.0
             complexity = "Very High"
-        elif issue_type in ("Improvement", "Story"):
+        elif issue_type in ("Improvement", "Story", "Suggestion"):
             sp = 3.0 if desc_len < 300 else 5.0
             complexity = "Medium"
         else:

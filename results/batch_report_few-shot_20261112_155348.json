@@ -1,0 +1,175 @@
+{
+  "metadata": {
+    "timestamp": "2026-11-12T15:53:48.266658",
+    "target_types": [
+      "Bug",
+      "Suggestion",
+      "Improvement",
+      "Story"
+    ],
+    "count_per_type": 1,
+    "total_issues_analyzed": 4,
+    "mode": "few-shot",
+    "mock_mode": true,
+    "project_filter": "ALL",
+    "total_execution_time_seconds": 15.24,
+    "average_time_per_issue_seconds": 3.81
+  },
+  "global_summary": {
+    "total_samples": 4,
+    "mae": 2.25,
+    "median_ae": 2.0,
+    "std_ae": 1.0897247358851685,
+    "exact_match_rate": 0.0,
+    "within_1_point_rate": 0.25,
+    "mean_confidence": 0.85
+  },
+  "metrics_by_type": {
+    "Bug": {
+      "total_samples": 1,
+      "mae": 2.0,
+      "median_ae": 2.0,
+      "std_ae": 0.0,
+      "exact_match_rate": 0.0,
+      "within_1_point_rate": 0.0,
+      "mean_confidence": 0.85
+    },
+    "Suggestion": {
+      "total_samples": 1,
+      "mae": 1.0,
+      "median_ae": 1.0,
+      "std_ae": 0.0,
+      "exact_match_rate": 0.0,
+      "within_1_point_rate": 1.0,
+      "mean_confidence": 0.85
+    },
+    "Improvement": {
+      "total_samples": 1,
+      "mae": 4.0,
+      "median_ae": 4.0,
+      "std_ae": 0.0,
+      "exact_match_rate": 0.0,
+      "within_1_point_rate": 0.0,
+      "mean_confidence": 0.85
+    },
+    "Story": {
+      "total_samples": 1,
+      "mae": 2.0,
+      "median_ae": 2.0,
+      "std_ae": 0.0,
+      "exact_match_rate": 0.0,
+      "within_1_point_rate": 0.0,
+      "mean_confidence": 0.85
+    }
+  },
+  "records": [
+    {
+      "issue_id": 396990,
+      "issue_key": "TISTUD-8760",
+      "project_key": "TISTUD",
+      "project_name": "Appcelerator Studio",
+      "issue_type": "Bug",
+      "priority": "High",
+      "title": "Android: Debugging for android device throws \"\"java.lang.NoClassDefFoundError: org/chromium/sdk/JavascriptVmFactory\"\"",
+      "actual_story_points": 5.0,
+      "predicted_story_points": 3.0,
+      "absolute_error": 2.0,
+      "confidence": 0.85,
+      "complexity": "Medium",
+      "mode": "few-shot",
+      "rationale": "[Mock Mode] Estimativa baseada no tipo 'Bug' e descrição de 539 caracteres.",
+      "key_factors": [
+        "Tipo: Bug",
+        "Extensão textual: 539 chars"
+      ],
+      "comparison_with_history": "Calibrado com âncoras históricas do projeto Mesos na faixa similar.",
+      "comment_count": 5,
+      "has_empty_description": false,
+      "has_zero_comments": false,
+      "execution_time_seconds": 0.0,
+      "batch_index": 1,
+      "timestamp": "2026-11-12T15:53:37.555326"
+    },
+    {
+      "issue_id": 58243,
+      "issue_key": "JSWCLOUD-13228",
+      "project_key": "JSWCLOUD",
+      "project_name": "Atlassian Software Cloud",
+      "issue_type": "Suggestion",
+      "priority": "None",
+      "title": "Update documentation to reflect public/anonymous access to board associated data has been removed.",
+      "actual_story_points": 2.0,
+      "predicted_story_points": 3.0,
+      "absolute_error": 1.0,
+      "confidence": 0.85,
+      "complexity": "Medium",
+      "mode": "few-shot",
+      "rationale": "[Mock Mode] Estimativa baseada no tipo 'Suggestion' e descrição de 299 caracteres.",
+      "key_factors": [
+        "Tipo: Suggestion",
+        "Extensão textual: 299 chars"
+      ],
+      "comparison_with_history": "Calibrado com âncoras históricas do projeto Mesos na faixa similar.",
+      "comment_count": 1,
+      "has_empty_description": false,
+      "has_zero_comments": false,
+      "execution_time_seconds": 0.0,
+      "batch_index": 2,
+      "timestamp": "2026-11-12T15:53:41.445709"
+    },
+    {
+      "issue_id": 318948,
+      "issue_key": "MDL-68112",
+      "project_key": "MDL",
+      "project_name": "Moodle",
+      "issue_type": "Improvement",
+      "priority": "Minor",
+      "title": "The search icon container in the activity chooser search bar should use bootstrap classes",
+      "actual_story_points": 1.0,
+      "predicted_story_points": 5.0,
+      "absolute_error": 4.0,
+      "confidence": 0.85,
+      "complexity": "Medium",
+      "mode": "few-shot",
+      "rationale": "[Mock Mode] Estimativa baseada no tipo 'Improvement' e descrição de 329 caracteres.",
+      "key_factors": [
+        "Tipo: Improvement",
+        "Extensão textual: 329 chars"
+      ],
+      "comparison_with_history": "Calibrado com âncoras históricas do projeto Mesos na faixa similar.",
+      "comment_count": 29,
+      "has_empty_description": false,
+      "has_zero_comments": false,
+      "execution_time_seconds": 0.0,
+      "batch_index": 3,
+      "timestamp": "2026-11-12T15:53:44.814073"
+    },
+    {
+      "issue_id": 234126,
+      "issue_key": "DM-14012",
+      "project_key": "DM",
+      "project_name": "Lsstcorp Data management",
+      "issue_type": "Story",
+      "priority": "None",
+      "title": "Add helper container class supporting topologically sorted iteration over elements",
+      "actual_story_points": 1.0,
+      "predicted_story_points": 3.0,
+      "absolute_error": 2.0,
+      "confidence": 0.85,
+      "complexity": "Medium",
+      "mode": "few-shot",
+      "rationale": "[Mock Mode] Estimativa baseada no tipo 'Story' e descrição de 154 caracteres.",
+      "key_factors": [
+        "Tipo: Story",
+        "Extensão textual: 154 chars"
+      ],
+      "comparison_with_history": "Calibrado com âncoras históricas do projeto Mesos na faixa similar.",
+      "comment_count": 0,
+      "has_empty_description": false,
+      "has_zero_comments": true,
+      "execution_time_seconds": 0.0,
+      "batch_index": 4,
+      "timestamp": "2026-11-12T15:53:48.265488"
+    }
+  ]
+}
