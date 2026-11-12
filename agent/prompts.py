@@ -10,7 +10,7 @@ Seu objetivo é analisar tarefas/issues do Jira e estimar com precisão o esfor�
    - 5 pontos: Funcionalidades com maior complexidade, lógica não trivial, múltiplas partes afetadas ou risco moderado.
    - 8 pontos: Tarefas complexas, alterações arquiteturais, alto grau de incerteza ou impacto abrangente no sistema.
    - 13 pontos: Tarefas muito grandes, epics ou refatorações profundas que exigem grande esforço de implementação e validação.
-2. Análise de Fatores: Avalie o Tipo (Bug, Task, Improvement, Story), a Prioridade, a clareza da Descrição e o histórico de discussão/comentários (analisando os comentários reais das issues de exemplo e o volume/contexto na issue a estimar).
+2. Análise de Fatores: Avalie o Tipo (Bug, Task, Improvement, Story), a Prioridade e a clareza da Descrição (além de analisar os comentários reais nas issues de exemplo histórico para fins de calibração).
 3. Tratamento de Incerteza: Se a issue tiver descrição escassa ou ausente, reconheça a incerteza nos fatores de risco e estime com base no escopo inferido pelo título e tipo.
 4. Responda estritamente no formato estruturado solicitado (Pydantic schema).
 """
@@ -24,8 +24,8 @@ def format_issue_card(
 ) -> str:
     """
     Formata os dados de uma issue em formato conciso para o prompt.
-    Nas issues passadas como exemplos (is_example=True), omite a quantidade de comentários
-    e inclui os próprios comentários da issue.
+    Nas issues passadas como exemplos (is_example=True), inclui os próprios comentários da issue.
+    A issue a ser estimada (is_example=False) não inclui comentários nem contagem de comentários.
     """
     if is_example is None:
         is_example = show_points
@@ -43,10 +43,6 @@ def format_issue_card(
         f"- Prioridade: {issue.get('priority', 'Major')}",
         f"- Título: {issue.get('title', 'Sem título')}",
     ]
-
-    # Para a issue a ser estimada (não-exemplo), mantém a quantidade de comentários
-    if not is_example:
-        card.append(f"- Número de Comentários: {issue.get('comment_count', 0)}")
 
     card.append(f"- Descrição:\n  \"\"\"{desc}\"\"\"")
 
