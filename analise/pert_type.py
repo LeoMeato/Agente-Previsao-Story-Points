@@ -1,6 +1,10 @@
 import pandas as pd
 import os
 from aux import *
+import os
+
+import warnings
+warnings.filterwarnings('ignore', category=FutureWarning)
 
 
 df_few_shot = pd.read_csv('results/batch_predictions_few-shot_20261114_154707.csv')
@@ -11,22 +15,125 @@ df_zero_shot.columns = df_zero_shot.columns.str.strip()
 
 print_dist = False
 
-path_pre = "analise/results/geral_pre/"
-path_image_pre = "analise/images/geral_pre/"
-
-path_pos = "analise/results/geral_pos/"
-path_image_pos = "analise/images/geral_pos/"
+path_pos = "analise/results/pos/type/"
+path_image_pos = "analise/images/pos/type/"
 
 
 
-print("==================== Resultados Tipo: Bug ====================")
-print("Few-Shot\n")
+grupos_por_tipo_few = {issue_type: grupo for issue_type, grupo in df_few_shot.groupby('issue_type')}
+grupos_por_tipo_zero = {issue_type: grupo for issue_type, grupo in df_zero_shot.groupby('issue_type')}
 
-grupos_por_tipo = {issue_type: grupo for issue_type, grupo in df_few_shot.groupby('issue_type')}
-grupo = grupos_por_tipo["Bug"]
 
-print("Distribuicao de erro (Predito-Real): ")
-df_few_shot['diferenca'] = (df_few_shot['predicted_story_points'] - df_few_shot['actual_story_points']) 
-contagem = df_few_shot['diferenca'].value_counts()
-for value, qtde in contagem.items():
-    print(f"\t{value:.2f}\tQtde: {qtde}")
+types = ["Bug", "Improvement", "Story", "Suggestion"]
+
+for type in types:
+    print(f"==================== Resultados Tipo: {type} ====================\n")
+    file = path_pos + f"{type}/analise.txt"
+    image = path_image_pos + f"{type}/"
+
+    if os.path.exists(file):
+        os.remove(file)
+
+    # ---------------------------------------------------------------
+
+    shots = ["Few", "Zero"]
+
+    for shot in shots:
+        if shot == "Few":
+            df = grupos_por_tipo_few[type]
+        if shot == "Zero":
+            df = grupos_por_tipo_zero[type]
+
+        message = f"-{shot}-Shot"
+        print(message)
+        aux_escrita(file, message)
+
+        message = "Distribuicao de erro (Predito - Real)"
+        if print_dist:
+            print(message)
+        aux_escrita(file, message)
+        df['diferenca'] = (df['predicted_story_points'] - df['actual_story_points']) 
+        contagem = df['diferenca'].value_counts()
+        for value, qtde in contagem.items():
+            message = f"\t{value:.2f} => {qtde}"
+            if print_dist:
+                print(message)
+            aux_escrita(file, message)
+        plot_distribuicao_erro(image + f"distr_erro_{type}_{shot}.png", df)
+
+        # ---------------------------------------------------------------
+
+        if shot == "Few":
+            df = grupos_por_tipo_few[type]
+        if shot == "Zero":
+            df = grupos_por_tipo_zero[type]
+        
+        message = f"-{shot}-Shot"
+        print(message)
+        aux_escrita(file, message)
+
+        df = grupos_por_tipo_few[type]
+
+        message = "Distribuicao de erro absoluto"
+        if print_dist:
+            print(message)
+        aux_escrita(file, message)
+        contagem = df['absolute_error'].value_counts()
+        for value, qtde in contagem.items():
+            message = f"\t{value} => {qtde}"
+            if print_dist:
+                print(message)
+            aux_escrita(file, message)
+        plot_erro_absoluto(image + f"erro_abs_{type}_{shot}.png", df)
+
+
+        # ---------------------------------------------------------------
+
+        if shot == "Few":
+            df = grupos_por_tipo_few[type]
+        if shot == "Zero":
+            df = grupos_por_tipo_zero[type]
+
+        message = f"-{shot}-Shot"
+        print(message)
+        aux_escrita(file, message)
+
+        df = grupos_por_tipo_few[type]
+
+        message = "Distribuicao de confianca (%)"
+        if print_dist:
+            print_dist(message)
+        aux_escrita(file, message)
+        contagem = df['confidence'].value_counts()
+        for value, qtde in contagem.items():
+            message = f"\t{int(float(value)*100)} => {qtde}"
+            if print_dist:
+                print(message)
+            aux_escrita(file, message)
+        plot_confianca(image + f"confianca_{type}_{shot}.png", df)
+
+        # ---------------------------------------------------------------
+
+        if shot == "Few":
+            df = grupos_por_tipo_few[type]
+        if shot == "Zero":
+            df = grupos_por_tipo_zero[type]
+
+        message = f"-{shot}-Shot"
+        print(message)
+        aux_escrita(file, message)
+
+        df = grupos_por_tipo_few[type]
+
+        message = "Distribuicao de complexidade"
+        if print_dist:
+            print(message)
+        aux_escrita(file, message)
+        contagem = df['complexity'].value_counts()
+        for value, qtde in contagem.items():
+            message = f"\t{value} =>  {qtde}"
+            if print_dist:
+                print(message)
+            aux_escrita(file, message)
+        plot_complexidade(image + f"complexidade_{type}_{shot}.png", df)
+

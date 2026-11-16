@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import numpy as np
 
 
 def aux_escrita(file: str, message: str = ""):
@@ -294,4 +295,54 @@ def plot_complexidade(file, df):
 
     plt.tight_layout()
     plt.savefig(file)
+    plt.close()
+
+
+
+
+def plot_distribuicao_erro(file_img, df):
+    # 1. Calcula a diferença e trunca em 2 casas decimais
+    df['diferenca'] = np.fix((df['predicted_story_points'] - df['actual_story_points']) * 100) / 100
+
+    # 2. Obtém os valores e suas contagens ordenados numericamente (do menor para o maior)
+    contagem = df['diferenca'].value_counts().sort_index()
+
+    num_barras = len(contagem)
+
+    # 3. Define a largura dinâmica (mínimo de 8 polegadas ou ~0.8 polegadas por barra)
+    largura = max(8, num_barras * 0.8)
+    altura = 5
+
+    plt.figure(figsize=(largura, altura))
+
+    # 4. Define cores baseadas no erro:
+    # Verde para acerto zero, vermelho/laranja para desvios (positivos ou negativos)
+    cores = ['#2ca02c' if val == 0 else '#4c72b0' for val in contagem.index]
+
+    # Criar o gráfico de barras
+    ax = sns.barplot(
+        x=[f"{val:.2f}" for val in contagem.index],
+        y=contagem.values,
+        palette=cores
+    )
+
+    plt.title('Distribuição de Erro (Predito - Real)', fontsize=14, pad=15)
+    plt.xlabel('Diferença em Story Points (Predito - Real)', fontsize=11)
+    plt.ylabel('Quantidade de Issues', fontsize=11)
+
+    # Rotaciona os rótulos do eixo X para não sobrepor se houverem muitos números
+    plt.xticks(rotation=45)
+
+    # Adiciona linha vertical no zero (destaque para acertos perfeitos) se o zero estiver presente
+    if "0.00" in [f"{val:.2f}" for val in contagem.index]:
+        idx_zero = [f"{val:.2f}" for val in contagem.index].index("0.00")
+        ax.axvline(x=idx_zero, color='green', linestyle='--', alpha=0.7, label='Acerto Exato (0)')
+        plt.legend()
+
+    # Adiciona os números em cima de cada barra
+    for container in ax.containers:
+        ax.bar_label(container, padding=3)
+
+    plt.tight_layout()
+    plt.savefig(file_img, dpi=300)
     plt.close()
