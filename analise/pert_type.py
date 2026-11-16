@@ -18,15 +18,11 @@ path_pos = "analise/results/geral_pos/"
 path_image_pos = "analise/images/geral_pos/"
 
 
-print("==================== Analise Geral ====================\n")
 
-grupos_por_tipo = {issue_type: grupo for issue_type, grupo in df.groupby('issue_type')}
-
-
-# Resultados
 print("==================== Resultados Tipo: Bug ====================")
 print("Few-Shot\n")
 
+grupos_por_tipo = {issue_type: grupo for issue_type, grupo in df_few_shot.groupby('issue_type')}
 grupo = grupos_por_tipo["Bug"]
 
 print("Distribuicao de erro (Predito-Real): ")
