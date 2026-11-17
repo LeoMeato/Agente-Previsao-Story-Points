@@ -1,7 +1,6 @@
 import pandas as pd
 import os
 from aux import *
-import os
 
 import warnings
 warnings.filterwarnings('ignore', category=FutureWarning)
@@ -24,10 +23,17 @@ grupos_por_tipo_few = {issue_type: grupo for issue_type, grupo in df_few_shot.gr
 grupos_por_tipo_zero = {issue_type: grupo for issue_type, grupo in df_zero_shot.groupby('issue_type')}
 
 
-types = ["Bug", "Improvement", "Story", "Suggestion"]
+types = ["Bug", "Improvement", "Story", "Suggestion", "ALL"]
+
+grupos_por_tipo_few["ALL"] = df_few_shot
+grupos_por_tipo_zero["ALL"] = df_zero_shot
 
 for type in types:
     print(f"==================== Resultados Tipo: {type} ====================\n")
+
+    os.makedirs(path_pos + f"{type}/", exist_ok=True)
+    os.makedirs(path_image_pos + f"{type}/", exist_ok=True)
+    
     file = path_pos + f"{type}/analise.txt"
     image = path_image_pos + f"{type}/"
 
@@ -39,6 +45,8 @@ for type in types:
     shots = ["Few", "Zero"]
 
     for shot in shots:
+
+
         if shot == "Few":
             df = grupos_por_tipo_few[type]
         if shot == "Zero":
@@ -72,7 +80,6 @@ for type in types:
         print(message)
         aux_escrita(file, message)
 
-        df = grupos_por_tipo_few[type]
 
         message = "Distribuicao de erro absoluto"
         if print_dist:
@@ -98,11 +105,10 @@ for type in types:
         print(message)
         aux_escrita(file, message)
 
-        df = grupos_por_tipo_few[type]
 
         message = "Distribuicao de confianca (%)"
         if print_dist:
-            print_dist(message)
+            print(message)
         aux_escrita(file, message)
         contagem = df['confidence'].value_counts()
         for value, qtde in contagem.items():
@@ -123,7 +129,6 @@ for type in types:
         print(message)
         aux_escrita(file, message)
 
-        df = grupos_por_tipo_few[type]
 
         message = "Distribuicao de complexidade"
         if print_dist:

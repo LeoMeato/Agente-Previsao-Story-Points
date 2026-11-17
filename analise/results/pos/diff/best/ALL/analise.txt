@@ -1,0 +1,10 @@
+-Best-Shot (Menor Erro por Issue)
+--- Estatísticas (Melhor Seleção por Issue) ---
+MAE (Média Erro Absoluto): 3.3504
+Mediana do Erro Absoluto: 2.0000
+Desvio Padrão do Erro Absoluto: 55.4284
+Média da Diferença (Pred - Real): -0.8270
+Mediana da Diferença: 1.0000
+Desvio Padrão da Diferença: 55.5235
+Mínimo / Máximo Diferença: [-3025.00, 7.90]
+

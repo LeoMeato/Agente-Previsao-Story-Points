@@ -1,0 +1,20 @@
+-Few-Shot
+--- Estatísticas ---
+MAE (Média Erro Absoluto): 6.2130
+Mediana do Erro Absoluto: 1.0000
+Desvio Padrão do Erro Absoluto: 110.4452
+Média da Diferença (Pred - Real): -4.4030
+Mediana da Diferença: 1.0000
+Desvio Padrão da Diferença: 110.5323
+Mínimo / Máximo Diferença: [-3025.00, 5.00]
+
+-Zero-Shot
+--- Estatísticas ---
+MAE (Média Erro Absoluto): 6.4130
+Mediana do Erro Absoluto: 1.0000
+Desvio Padrão do Erro Absoluto: 110.5106
+Média da Diferença (Pred - Real): -4.9363
+Mediana da Diferença: -1.0000
+Desvio Padrão da Diferença: 110.5865
+Mínimo / Máximo Diferença: [-3027.00, 7.50]
+

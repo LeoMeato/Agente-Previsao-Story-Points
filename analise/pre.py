@@ -17,6 +17,9 @@ path_image_pre = "analise/images/pre/"
 
 print("==================== Analise Geral ====================\n")
 
+os.makedirs(path_pre, exist_ok=True)
+os.makedirs(path_image_pre, exist_ok=True)
+
 file_analise_pre = path_pre + "analise_pre_geral.txt"
 
 if os.path.exists(file_analise_pre):
